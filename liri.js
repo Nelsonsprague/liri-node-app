@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 var axios = require("axios")
-var keys = require("./keys");
+var keys = require("./keys.js");
 var spotify = new Spotify(keys.spotify);
 
 // concert-this 
@@ -26,7 +26,9 @@ var spotify = new Spotify(keys.spotify);
 
 //movie-this
 // This will show the following information about the song in your terminal/bash window
+axios.get("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy").then(function(response){
 
+})
 
 // Artist(s)
 // The song's name
