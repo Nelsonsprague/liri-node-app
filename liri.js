@@ -2,8 +2,8 @@ require("dotenv").config();
 
 var axios = require("axios")
 var keys = require("./keys.js");
-var Spotify = require("node-spotify-api")
-
+var Spotify = require("node-spotify-api");
+var moment = require("moment");
 var spotify = new Spotify(keys.spotify);
 
 // concert-this 
@@ -29,9 +29,24 @@ var spotify = new Spotify(keys.spotify);
 //movie-this
 // This will show the following information about the song in your terminal/bash window
 axios.get("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy").then(function(response){
-
+console.log("The movie's rating is: " + response.data.imdbRating);
 })
-
+.catch(function(error){
+    if(error.response){
+        console.log("---------------Data---------------");
+      console.log(error.response.data);
+      console.log("---------------Status---------------");
+      console.log(error.response.status);
+      console.log("---------------Status---------------");
+      console.log(error.response.headers);
+    }else if (error.request){
+        console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log("Error", error.message);
+    }
+    console.log(error.config);
+});
 // Artist(s)
 // The song's name
 // A preview link of the song from Spotify
