@@ -4,54 +4,88 @@ var axios = require("axios")
 var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var moment = require("moment");
+var fs = require("fs")
 var spotify = new Spotify(keys.spotify);
 
-// concert-this 
+var artist = "Ariana+Grande"
 // node liri.js concert-this <artist/band name here>
+axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp").then(function(response){
+  // Name of the venue
+// console.log(response.data[0].venue.name)
+// // Venue location
+// console.log(response.data[0].venue.city)
+// // Date of the Event (use moment to format this as "MM/DD/YYYY")
+// console.log(moment(response.data[0].datetime).format("MM/DD/YYYY"))
+})
+.catch(function(error){
+  if(error.response){
+    console.log("---------------Data---------------");
+    console.log(error.response.data);
+    console.log("---------------Status---------------");
+    console.log(error.response.status);
+    console.log("---------------Status---------------");
+    console.log(error.response.headers);
+  }else if (error.request){
+    console.log(error.request);
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    console.log("Error", error.message);
+  }
+  console.log(error.config);
+});
 
-// This will search the Bands in Town Artist Events API ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp") for an artist and render the following information about each event to the terminal:
 
-
-// Name of the venue
-// Venue location
-// Date of the Event (use moment to format this as "MM/DD/YYYY")
 
 
 //spotify-this-song
 // This will show the following information about the song in your terminal/bash window
-
-
-// Artist(s)
-// The song's name
+spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+  if (err) {
+    return console.log('Error occurred: ' + err);
+  }
+ 
+  // Artist(s)
+  console.log(data.tracks.items[0].album.artists[0].name);
+  // The song's name
+  console.log(data.tracks.items[0].name);
 // A preview link of the song from Spotify
+console.log(data.tracks.items[0].external_urls.spotify);
 // The album that the song is from
+console.log(data.tracks.items[0].album.name);
+});
+// If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 
-//movie-this
-// This will show the following information about the song in your terminal/bash window
-axios.get("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy").then(function(response){
-console.log("The movie's rating is: " + response.data.imdbRating);
-})
-.catch(function(error){
+
+// If you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/
+
+  title = "Mr.+Nobody"
+
+
+  
+  // console.log(title)
+  axios.get("https://www.omdbapi.com/?t="+ title +"&y=&plot=short&apikey=trilogy").then(function(response){
+    
+    // console.log("The IMDB movie's rating is: " + response.data.imdbRating + "\nThe Rotten Tomatoes Rating of the movie: " + response.data.Ratings[1].Value + "\nCountry Produced: " + response.data.Country + "\nLanguage: " + response.data.Language + "\nPlot: " + response.data.Plot + "\nActors: " + response.data.Actors);
+  })
+  .catch(function(error){
     if(error.response){
-        console.log("---------------Data---------------");
+      console.log("---------------Data---------------");
       console.log(error.response.data);
       console.log("---------------Status---------------");
       console.log(error.response.status);
       console.log("---------------Status---------------");
       console.log(error.response.headers);
     }else if (error.request){
-        console.log(error.request);
+      console.log(error.request);
     } else {
       // Something happened in setting up the request that triggered an Error
       console.log("Error", error.message);
     }
     console.log(error.config);
-});
-// Artist(s)
-// The song's name
-// A preview link of the song from Spotify
-// The album that the song is from
+  });
 
+  
+  
 //do-what-it-says
 // node liri.js do-what-it-says
 
