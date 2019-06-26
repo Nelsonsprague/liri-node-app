@@ -7,12 +7,11 @@ var moment = require("moment");
 var fs = require("fs")
 var spotify = new Spotify(keys.spotify);
 var userCommand = process.argv[2];
-var secondCommand = process.argv[3];
-var artist = "Ariana+Grande"
+var secondUserCommand = process.argv[3];
 function concertThis(){
 
   // node liri.js concert-this <artist/band name here>
-  axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp").then(function(response){
+  axios.get("https://rest.bandsintown.com/artists/" + secondUserCommand + "/events?app_id=codingbootcamp").then(function(response){
     // Name of the venue
     console.log(response.data[0].venue.name)
     // Venue location
@@ -45,7 +44,7 @@ function concertThis(){
 // This will show the following information about the song in your terminal/bash window
 function spotifyThis(){
 
-  spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+  spotify.search({ type: 'track', query: secondUserCommand }, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
@@ -65,7 +64,7 @@ function spotifyThis(){
 
   function movieThis(){
 
-    axios.get("https://www.omdbapi.com/?t="+ title +"&y=&plot=short&apikey=trilogy").then(function(response){
+    axios.get("https://www.omdbapi.com/?t="+ secondUserCommand +"&y=&plot=short&apikey=trilogy").then(function(response){
       
       console.log("The IMDB movie's rating is: " + response.data.imdbRating + "\nThe Rotten Tomatoes Rating of the movie: " + response.data.Ratings[1].Value + "\nCountry Produced: " + response.data.Country + "\nLanguage: " + response.data.Language + "\nPlot: " + response.data.Plot + "\nActors: " + response.data.Actors);
     })
@@ -95,8 +94,11 @@ function doIt(){
 fs.readFile("random.txt", "utf8", function(error, data){
   if(!error){
     var splited = data.toString().split(',');
-    console.log(splited);
+    userCommand = splited[0];
+    secondUserCommand = splited[1];
   }
+  
+  mySwitch(userCommand)
 });
 
 }
@@ -110,15 +112,31 @@ fs.readFile("random.txt", "utf8", function(error, data){
 function mySwitch(userCommand){
 switch(userCommand){
 case "concert-this":
+  if(secondUserCommand==" "){
+secondUserCommand= "ariana+grande"
+console.log("yo");
+  }
+  console.log(secondUserCommand)
 concertThis();
 break;
 case "spotify-this-song":
+    if(secondUserCommand==" "){
+      secondUserCommand= "Rockstar"
+      console.log("yo");
+        }
+        console.log(secondUserCommand)
   spotifyThis();
   break;
   case "movie-this":
+      if(secondUserCommand==" "){
+        secondUserCommand= "ariana+grande"
+        console.log("yo");
+          }
+          console.log(secondUserCommand)
   movieThis();
   break;
   case "do-what-it-says":
+    
   doIt();
   break;
 }
