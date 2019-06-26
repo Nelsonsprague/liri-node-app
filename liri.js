@@ -9,7 +9,6 @@ var spotify = new Spotify(keys.spotify);
 var userCommand = process.argv[2];
 var secondUserCommand = process.argv[3];
 function concertThis(){
-
   // node liri.js concert-this <artist/band name here>
   axios.get("https://rest.bandsintown.com/artists/" + secondUserCommand + "/events?app_id=codingbootcamp").then(function(response){
     // Name of the venue
@@ -30,25 +29,17 @@ function concertThis(){
     }else if (error.request){
       console.log(error.request);
     } else {
-      
       console.log("Error", error.message);
     }
     console.log(error.config);
   });
 }
 
-
-
-
-//spotify-this-song
-// This will show the following information about the song in your terminal/bash window
 function spotifyThis(){
-
   spotify.search({ type: 'track', query: secondUserCommand }, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
-    
     // Artist(s)
     console.log(data.tracks.items[0].album.artists[0].name);
     // The song's name
@@ -59,14 +50,11 @@ function spotifyThis(){
     console.log(data.tracks.items[0].album.name);
   });
 }
-  // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-  title = "Mr.+Nobody"
 
   function movieThis(){
-
     axios.get("https://www.omdbapi.com/?t="+ secondUserCommand +"&y=&plot=short&apikey=trilogy").then(function(response){
-      
-      console.log("The IMDB movie's rating is: " + response.data.imdbRating + "\nThe Rotten Tomatoes Rating of the movie: " + response.data.Ratings[1].Value + "\nCountry Produced: " + response.data.Country + "\nLanguage: " + response.data.Language + "\nPlot: " + response.data.Plot + "\nActors: " + response.data.Actors);
+    // console.log(response)  
+    console.log(response.data.Title+"\nThe IMDB movie's rating is: " + response.data.imdbRating + "\nThe Rotten Tomatoes Rating of the movie: " + response.data.Ratings[1].Value + "\nCountry Produced: " + response.data.Country + "\nLanguage: " + response.data.Language + "\nPlot: " + response.data.Plot + "\nActors: " + response.data.Actors);
     })
     .catch(function(error){
       if(error.response){
@@ -84,12 +72,8 @@ function spotifyThis(){
       }
       console.log(error.config);
     });
-    
   }
   
-  
-//do-what-it-says
-// node liri.js do-what-it-says
 function doIt(){
 fs.readFile("random.txt", "utf8", function(error, data){
   if(!error){
@@ -97,17 +81,9 @@ fs.readFile("random.txt", "utf8", function(error, data){
     userCommand = splited[0];
     secondUserCommand = splited[1];
   }
-  
   mySwitch(userCommand)
 });
-
 }
-
-
-// Using the fs Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
-
-// It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt.
-// Edit the text in random.txt to test out the feature for movie-this and concert-this.
 
 function mySwitch(userCommand){
 switch(userCommand){
@@ -115,15 +91,12 @@ case "concert-this":
   if(secondUserCommand==undefined){
 secondUserCommand= "ariana grande"
   }
-  
 concertThis();
 break;
 case "spotify-this-song":
     if(secondUserCommand==undefined){
-      secondUserCommand= "The Sign"
-      
-        }
-        
+      secondUserCommand= "The Sign Ace of Base"
+      } 
   spotifyThis();
   break;
   case "movie-this":
@@ -131,10 +104,8 @@ case "spotify-this-song":
         secondUserCommand= "Mr. Nobody"
       }
       movieThis();
-          
   break;
   case "do-what-it-says":
-    
   doIt();
   break;
 }
