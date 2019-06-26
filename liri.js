@@ -112,28 +112,26 @@ fs.readFile("random.txt", "utf8", function(error, data){
 function mySwitch(userCommand){
 switch(userCommand){
 case "concert-this":
-  if(secondUserCommand==" "){
-secondUserCommand= "ariana+grande"
-console.log("yo");
+  if(secondUserCommand==undefined){
+secondUserCommand= "ariana grande"
   }
-  console.log(secondUserCommand)
+  
 concertThis();
 break;
 case "spotify-this-song":
-    if(secondUserCommand==" "){
-      secondUserCommand= "Rockstar"
-      console.log("yo");
+    if(secondUserCommand==undefined){
+      secondUserCommand= "The Sign"
+      
         }
-        console.log(secondUserCommand)
+        
   spotifyThis();
   break;
   case "movie-this":
-      if(secondUserCommand==" "){
-        secondUserCommand= "ariana+grande"
-        console.log("yo");
-          }
-          console.log(secondUserCommand)
-  movieThis();
+      if(secondUserCommand==undefined){
+        secondUserCommand= "Mr. Nobody"
+      }
+      movieThis();
+          
   break;
   case "do-what-it-says":
     
